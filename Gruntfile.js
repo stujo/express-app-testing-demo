@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     jshint: {
       options: {
         jshintrc: '.jshintrc',
-        ignores: ['test/coverage/**/*.js']
+        ignores: 'coverage/**/*.js'
       },
       files: {
         src: ['app/**/*.js', 'test/**/*.js']
@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         tasks: 'jshint'
       },
       test: {
-        files: ['test/unit/*.js'],
+        files: 'test/unit/*.js',
         tasks: ['jshint', 'mochaTest:unit']
       }
     },
@@ -55,45 +55,41 @@ module.exports = function (grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/unit/*.js']
+        src: '<%= grunt.option("testBasePath") %>' + 'test/unit/*.js'
       },
       route: {
         options: {
           reporter: 'spec'
         },
-        src: ['test/route/*.js']
+        src: '<%= grunt.option("testBasePath") %>' + 'test/route/*.js'
       },
       api: {
         options: {
           reporter: 'spec'
         },
-        src: ['test/api/*.js']
+        src: '<%= grunt.option("testBasePath") %>' + 'test/api/*.js'
       }
     },
 
 
     // start - code coverage settings
 
-    env: {
-      coverage: {
-        APP_DIR_FOR_CODE_COVERAGE: '../test/coverage/instrument/app/'
-      }
-    },
-
-
     clean: {
       coverage: {
-        src: ['test/coverage/']
-      }
+        src: 'coverage/'
+      },
+      coverageIstrument: 'coverage/instrument/'
     },
 
 
     copy: {
       views: {
-        expand: true,
-        flatten: true,
-        src: ['app/views/*'],
-        dest: 'test/coverage/instrument/app/views'
+        src: 'app/views/*',
+        dest: 'coverage/instrument/'
+      },
+      tests: {
+        src: 'test/**/*',
+        dest: 'coverage/instrument/'
       }
     },
 
@@ -102,23 +98,23 @@ module.exports = function (grunt) {
       files: 'app/*.js',
       options: {
         lazy: true,
-        basePath: 'test/coverage/instrument/'
+        basePath: 'coverage/instrument/'
       }
     },
 
 
     storeCoverage: {
       options: {
-        dir: 'test/coverage/reports'
+        dir: 'coverage/reports'
       }
     },
 
 
     makeReport: {
-      src: 'test/coverage/reports/**/*.json',
+      src: 'coverage/reports/*.json',
       options: {
         type: 'lcov',
-        dir: 'test/coverage/reports',
+        dir: 'coverage/reports',
         print: 'detail'
       }
     }
@@ -137,7 +133,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-istanbul');
-  grunt.loadNpmTasks('grunt-env');
 
 
   // tasks
@@ -145,7 +140,12 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['jshint', 'server']);
   grunt.registerTask('test', ['mochaTest:unit', 'mochaTest:route', 'mochaTest:api']);
 
-  grunt.registerTask('coverage', ['jshint', 'clean', 'copy:views', 'env:coverage',
-    'instrument', 'mochaTest:unit', 'mochaTest:route', 'storeCoverage', 'makeReport']);
+  grunt.registerTask('coverage', ['jshint', 'clean:coverage', 'copy:tests', 'copy:views',
+    'setTestDir', 'instrument', 'mochaTest:unit', 'mochaTest:route', 'storeCoverage',
+    'makeReport', 'clean:coverageIstrument']);
+
+  grunt.registerTask('setTestDir', function () {
+    grunt.option('testBasePath', 'coverage/instrument/');
+  });
 
 };

@@ -1,6 +1,5 @@
 var request = require('supertest');
-var requireHelper = require('../require_helper');
-var app = requireHelper('app');
+var app = require('../../app/app');
 var nock = require('nock');
 
 

@@ -2,8 +2,7 @@
 
 var should = require('should');
 var nock = require('nock');
-var requireHelper = require('../require_helper');
-var photoModel = requireHelper('photo_model');
+var photoModel = require('../../app/photo_model');
 
 
 describe('photo_model.js', function () {
