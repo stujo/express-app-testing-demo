@@ -50,80 +50,16 @@ module.exports = function (grunt) {
     },
 
 
-    mochaTest: {
-      unit: {
-        options: {
-          reporter: 'spec'
-        },
-        src: ['test/unit/*.js']
-      },
-      route: {
-        options: {
-          reporter: 'spec'
-        },
-        src: ['test/route/*.js']
-      },
-      api: {
-        options: {
-          reporter: 'spec'
-        },
-        src: ['test/api/*.js']
-      }
-    },
-
-
-    // start - code coverage settings
-
-    env: {
+    shell: {
       coverage: {
-        APP_DIR_FOR_CODE_COVERAGE: '../test/coverage/instrument/app/'
-      }
-    },
-
-
-    clean: {
-      coverage: {
-        src: ['test/coverage/']
-      }
-    },
-
-
-    copy: {
-      views: {
-        expand: true,
-        flatten: true,
-        src: ['app/views/*'],
-        dest: 'test/coverage/instrument/app/views'
-      }
-    },
-
-
-    instrument: {
-      files: 'app/*.js',
-      options: {
-        lazy: true,
-        basePath: 'test/coverage/instrument/'
-      }
-    },
-
-
-    storeCoverage: {
-      options: {
-        dir: 'test/coverage/reports'
-      }
-    },
-
-
-    makeReport: {
-      src: 'test/coverage/reports/**/*.json',
-      options: {
-        type: 'lcov',
-        dir: 'test/coverage/reports',
-        print: 'detail'
+        command: './node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ' +
+          '-- test/**/*.js -R spec'
+      },
+      test: {
+        command: './node_modules/.bin/mocha test/**/*.js -R spec'
       }
     }
 
-    // end - code coverage settings
 
   });
 
@@ -131,21 +67,15 @@ module.exports = function (grunt) {
   // plugins
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-istanbul');
-  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-shell');
 
 
   // tasks
   grunt.registerTask('server', ['concurrent:target']);
   grunt.registerTask('default', ['jshint', 'server']);
-  grunt.registerTask('test', ['mochaTest:unit', 'mochaTest:route', 'mochaTest:api']);
-
-  grunt.registerTask('coverage', ['jshint', 'clean', 'copy:views', 'env:coverage',
-    'instrument', 'mochaTest:unit', 'mochaTest:route', 'storeCoverage', 'makeReport']);
+  grunt.registerTask('test', ['shell:test']);
+  grunt.registerTask('coverage', ['shell:coverage']);
 
 };

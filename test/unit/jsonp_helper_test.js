@@ -1,8 +1,7 @@
 /* jshint expr: true */
 
 var should = require('should');
-var requireHelper = require('../require_helper');
-var jsonpHelper = requireHelper('jsonp_helper');
+var jsonpHelper = require('../../app/jsonp_helper');
 
 
 describe('jsonp_helper.js', function () {

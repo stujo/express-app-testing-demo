@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for app/photo_model.js</title>
+    <title>Code coverage report for app/jsonp_helper.js</title>
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="../prettify.css">
@@ -196,23 +196,23 @@
 </head>
 <body>
 <div class="header high">
-    <h1>Code coverage report for <span class="entity">app/photo_model.js</span></h1>
+    <h1>Code coverage report for <span class="entity">app/jsonp_helper.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">100% <small>(16 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(10 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(1 / 1)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">100% <small>(16 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(10 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
-    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">app/</a> &#187; photo_model.js</div>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">app/</a> &#187; jsonp_helper.js</div>
 </div>
 <div class="body">
 <pre><table class="coverage">
@@ -239,75 +239,21 @@
 21
 22
 23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">1</span>
+24</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">9</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -316,62 +262,35 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var request = require('request');
-var jsonpHelper = require('./jsonp_helper');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var parseJSONP = function (jsonpData) {
 &nbsp;
+  try {
+    var startPos = jsonpData.indexOf('({');
+    var endPos = jsonpData.lastIndexOf('})');
+    var jsonString = jsonpData.substring(startPos + 1, endPos + 1);
 &nbsp;
-var getFlickrPhotos = function (tags, tagmode, callback) {
+    // remove escaped single quotes since they are not valid json
+    jsonString = jsonString.replace(/\\'/g, "'");
 &nbsp;
-  var flickrPublicFeedAPI = {
-    uri: 'http://api.flickr.com/services/feeds/photos_public.gne',
-    timeout: 10000,
-    qs: {
-      tags: tags,
-      tagmode: tagmode,
-      format: 'json'
-    }
-  };
-&nbsp;
-  request.get(flickrPublicFeedAPI, function (error, response, body) {
-&nbsp;
-    if (!error &amp;&amp; response.statusCode === 200) {
-&nbsp;
-      try {
-&nbsp;
-        var json = jsonpHelper.parseJSONP(body);
-        var photos = json.items;
-&nbsp;
-        photos.forEach(function (photo) {
-          photo.media.t = photo.media.m.split('m.jpg')[0] + 't.jpg';
-          photo.media.b = photo.media.m.split('m.jpg')[0] + 'b.jpg';
-        });
-&nbsp;
-        callback(null, photos);
-&nbsp;
-      }
-      catch (e) {
-        callback(new Error('Flickr public feed api error: ' + e.message));
-      }
-&nbsp;
-    }
-    else {
-      callback(new Error('Flickr public feed api error'));
-    }
-&nbsp;
-  });
+    return JSON.parse(jsonString);
+  }
+  catch (e) {
+    var error = new Error('Error coverting jsonp to json: ' + e.message);
+    throw error;
+  }
 &nbsp;
 };
 &nbsp;
 &nbsp;
 module.exports = {
-  getFlickrPhotos: getFlickrPhotos
+  parseJSONP: parseJSONP
 };
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 19 2014 17:09:39 GMT-0800 (PST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 18 2014 19:56:26 GMT-0700 (PDT)</div>
 </div>
 
 <script src="../prettify.js"></script>
